@@ -1,0 +1,145 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<!--
+
+Shows drop down menu (works on chrome)
+
+### Usage
+The list displayed in the drop down menu can be set as an attribute.
+
+    <drop-menu list-items='["first" ,"second"]'></drop-menu>
+
+For an overlayed drop menu:
+
+    <drop-menu overlay-menu list-items='["first" ,"second"]'></drop-menu>
+
+### Styling
+ Custom property | Description | Default
+----------------|-------------|----------
+`--item-background-color` | List item backround color | `#f1ecef`
+`--item-color` | List item color used for fonts | `#302f31`
+`--close-color` | Icon button hover color | `4775D1`
+`--content-background` | Drop menu's background color | `white`
+`--close-color` | Icon button hover color | `4775D1`
+`--icon-button` | Mixin applied the icon button | `{}`
+
+@demo demo/drop-menu-demo.html
+-->
+<dom-module id="prompt-dialog">
+    <template>
+        <style dialog-title>
+            [dialog-title] {
+                font-size: 22px;
+                margin-bottom: 20px ;
+                @apply(--layout-horizontal);
+                @apply(--layout-center);
+                color: gray ;
+            }
+            [title]{
+                width: 100% ;
+                @apply(--layout-center-justified);
+                @apply(--layout-horizontal);
+            }
+            [exit-button-invisible]{
+                visibility: hidden;
+            }
+            paper-icon-button{
+                margin-left:-10px ;
+                margin-top: -20px ;
+                margin-right: 12px ;
+                color:gray ;
+                border-radius: 100% ;
+                font-weight: 300 ;
+            }
+            paper-icon-button:hover{
+                color:var(--close-color) ;
+            }
+        </style>
+        <style dialog-content>
+            [dialog-content]{
+                width: 100% ;
+                font-size: 20px ;
+                padding-left: 5px ;
+                padding-right: 5px ;
+                @apply(--layout-center-justified);
+                @apply(--layout-horizontal);
+                @apply(--layout-center);
+            }
+        </style>
+        <style dialog-buttons>
+            [dialog-buttons]{
+                width: 100% ;
+                @apply(--layout-horizontal);
+                @apply(--layout-center-justified);
+            }
+            paper-button{
+                font-weight: 400 ;
+                margin-top: 30px ;
+                width: 45% ;
+                color: white ;
+                font-size: 16px ;
+                background-color: var(--close-color) ;
+            }
+        </style>
+        <style>
+            paper-dialog {
+                top:5vh ;
+                font-size: 22px;
+                font-weight: 300;
+                width: 450px;
+                overflow: auto;
+                border-radius: 10px;
+            }
+        </style>
+        <paper-dialog entry-animation="scale-up-animation" exit-animation="fade-out-animation" id="dialog" with-backdrop>
+            <div wrapper>
+                <template is="dom-if" if="[[dialogTitle]]" >
+                    <div dialog-title>
+                        <div exit-button>
+                            <paper-icon-button on-click="close" icon="close"></paper-icon-button>
+                        </div>
+                        <div title>
+                            {{dialogTitle}}
+                        </div>
+                        <div exit-button-invisible>
+                            <paper-icon-button on-click="close" icon="close"></paper-icon-button>
+                        </div>
+                    </div>
+                </template>
+                <div dialog-content>
+                    <content select="[content]">
+                        {{message}}
+                    </content>
+                </div>
+                <div dialog-buttons>
+                    <template is="dom-if" if="[[cancel-button]]" >
+                        <paper-button on-click="close" id="cancel">{{cancelButton}}</paper-button>
+                    </template>
+                    <template is="dom-if" if="[[confirm-button]]" >
+                        <paper-button on-click="_action" id="[[confirm-button]]" id="confirm">{{confirmButton}}</paper-button>
+                    </template>
+                </div>
+            </div>
+        </paper-dialog>
+    </template>
+    <script>
+        Polymer({
+            is: "prompt-dialog",
+            observers: [],
+            behaviors: [],
+            listeners: {},
+            properties: {},
+            _action: function(e){
+                this.fire('prompt-dialog-action', {action:e.currentTarget.id}) ;
+            },
+            open: function () {
+                this.$.dialog.open();
+            },
+            close: function(){
+                this.$.dialog.close() ;
+            }
+        });
+    </script>
+</dom-module>
