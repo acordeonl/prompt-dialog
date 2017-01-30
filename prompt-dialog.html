@@ -35,7 +35,7 @@ For an overlayed drop menu:
                 margin-bottom: 20px ;
                 @apply(--layout-horizontal);
                 @apply(--layout-center);
-                color: gray ;
+                color: var(--content-color2) ;
             }
             [title]{
                 width: 100% ;
@@ -49,7 +49,7 @@ For an overlayed drop menu:
                 margin-left:-10px ;
                 margin-top: -20px ;
                 margin-right: 12px ;
-                color:gray ;
+                color:var(--content-color2) ;
                 border-radius: 100% ;
                 font-weight: 300 ;
             }
@@ -78,7 +78,7 @@ For an overlayed drop menu:
                 font-weight: 400 ;
                 margin-top: 30px ;
                 width: 45% ;
-                color: white ;
+                color: var(--content-background) ;
                 font-size: 16px ;
                 background-color: var(--close-color) ;
             }
@@ -91,6 +91,8 @@ For an overlayed drop menu:
                 width: 450px;
                 overflow: auto;
                 border-radius: 10px;
+                color:var(--content-color) ;
+                background-color: var(--content-background) ;
             }
         </style>
         <paper-dialog entry-animation="scale-up-animation" exit-animation="fade-out-animation" id="dialog" with-backdrop>
