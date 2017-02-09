@@ -35,7 +35,7 @@ For an overlayed drop menu:
                 margin-bottom: 20px ;
                 @apply(--layout-horizontal);
                 @apply(--layout-center);
-                color: var(--content-color2) ;
+                color: var(--content-color2,#636363) ;
             }
             [title]{
                 width: 100% ;
@@ -49,12 +49,12 @@ For an overlayed drop menu:
                 margin-left:-10px ;
                 margin-top: -20px ;
                 margin-right: 12px ;
-                color:var(--content-color2) ;
+                color:var(--content-color2,#636363) ;
                 border-radius: 100% ;
                 font-weight: 300 ;
             }
             paper-icon-button:hover{
-                color:var(--close-color) ;
+                color:var(--close-color,#4775D1) ;
             }
         </style>
         <style dialog-content>
@@ -78,9 +78,9 @@ For an overlayed drop menu:
                 font-weight: 400 ;
                 margin-top: 30px ;
                 width: 45% ;
-                color: var(--content-background) ;
+                color: var(--content-background,#fafafa) ;
                 font-size: 16px ;
-                background-color: var(--close-color) ;
+                background-color: var(--close-color,#4775D1) ;
             }
         </style>
         <style>
@@ -91,8 +91,8 @@ For an overlayed drop menu:
                 width: 450px;
                 overflow: auto;
                 border-radius: 10px;
-                color:var(--content-color) ;
-                background-color: var(--content-background) ;
+                color:var(--content-color,#212121) ;
+                background-color: var(--content-background,#fafafa) ;
             }
         </style>
         <paper-dialog entry-animation="scale-up-animation" exit-animation="fade-out-animation" id="dialog" with-backdrop>
