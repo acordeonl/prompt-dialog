@@ -1,46 +1,23 @@
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../polymer/lib/elements/dom-if.html">
 <link rel="import" href="../paper-dialog/paper-dialog.html">
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
-<!--
 
-Shows drop down menu (works on chrome)
-
-### Usage
-The list displayed in the drop down menu can be set as an attribute.
-
-    <drop-menu list-items='["first" ,"second"]'></drop-menu>
-
-For an overlayed drop menu:
-
-    <drop-menu overlay-menu list-items='["first" ,"second"]'></drop-menu>
-
-### Styling
- Custom property | Description | Default
-----------------|-------------|----------
-`--item-background-color` | List item backround color | `#f1ecef`
-`--item-color` | List item color used for fonts | `#302f31`
-`--theme-color1` | Icon button hover color | `4775D1`
-`--content-background` | Drop menu's background color | `white`
-`--theme-color1` | Icon button hover color | `4775D1`
-`--icon-button` | Mixin applied the icon button | `{}`
-
-@demo demo/drop-menu-demo.html
--->
 <dom-module id="prompt-dialog">
     <template>
         <style dialog-title>
             [dialog-title] {
                 font-size: 22px;
                 margin-bottom: 20px ;
-                @apply(--layout-horizontal);
-                @apply(--layout-center);
+                @apply --layout-horizontal;
+                @apply --layout-center;
                 color: var(--content-color2,#636363) ;
             }
             [title]{
                 width: 100% ;
-                @apply(--layout-center-justified);
-                @apply(--layout-horizontal);
+                @apply --layout-center-justified;
+                @apply --layout-horizontal;
             }
             [exit-button-invisible]{
                 visibility: hidden;
@@ -63,16 +40,16 @@ For an overlayed drop menu:
                 font-size: 20px ;
                 padding-left: 5px ;
                 padding-right: 5px ;
-                @apply(--layout-center-justified);
-                @apply(--layout-horizontal);
-                @apply(--layout-center);
+                @apply --layout-center-justified;
+                @apply --layout-horizontal;
+                @apply --layout-center;
             }
         </style>
         <style dialog-buttons>
             [dialog-buttons]{
                 width: 100% ;
-                @apply(--layout-horizontal);
-                @apply(--layout-center-justified);
+                @apply --layout-horizontal;
+                @apply --layout-center-justified;
             }
             paper-button{
                 font-weight: 400 ;
@@ -113,40 +90,53 @@ For an overlayed drop menu:
                     </div>
                 </template>
                 <div dialog-content>
-                    <content select="[content]">
+                    <template is="dom-if" if="[[withMessage]]">
                         {{message}}
-                    </content>
+                    </template>
+                    <template is="dom-if" if="[[!withMessage]]">
+                        <slot>
+                        </slot>
+                    </template>
                 </div>
                 <div dialog-buttons>
-                    <template is="dom-if" if="[[cancel-button]]" >
+                    <template is="dom-if" if="[[cancelButton]]" >
                         <paper-button on-click="close" id="cancel">{{cancelButton}}</paper-button>
                     </template>
-                    <template is="dom-if" if="[[confirm-button]]" >
-                        <paper-button on-click="_action" id="[[confirm-button]]" id="confirm">{{confirmButton}}</paper-button>
+                    <template is="dom-if" if="[[confirmButton]]" >
+                        <paper-button on-click="_action" id="[[confirmButton]]" id="confirm">{{confirmButton}}</paper-button>
                     </template>
                 </div>
             </div>
         </paper-dialog>
-        <div backdrop>
+        <!-- <div backdrop>
 
-        </div>
+        </div> -->
     </template>
     <script>
-        Polymer({
-            is: "prompt-dialog",
-            observers: [],
-            behaviors: [],
-            listeners: {},
-            properties: {},
-            _action: function(e){
-                this.fire('prompt-dialog-action', {action:e.currentTarget.id}) ;
-            },
-            open: function () {
+        class PromptDialog extends Polymer.Element {
+            static get is() { return 'prompt-dialog'; }
+            static get properties() {return {
+                dialogTitle:{type:String},
+                confirmButton:{type:String},
+                cancelButton:{type:String},
+                withMessage:{type:Boolean,value:false},
+                message:{type:String}
+            }}
+            constructor() {
+                super();
+            }
+            _action (e){
+                this.dispatchEvent(new CustomEvent('prompt-dialog-action', {detail:{
+                    action:e.currentTarget.id
+                }, bubbles: true, composed: true }));
+            }
+            open  () {
                 this.$.dialog.open();
-            },
-            close: function(){
+            }
+            close (){
                 this.$.dialog.close() ;
             }
-        });
+        }
+        customElements.define('prompt-dialog', PromptDialog);
     </script>
 </dom-module>
