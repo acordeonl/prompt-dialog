@@ -103,7 +103,7 @@
                         <paper-button on-click="close" id="cancel">{{cancelButton}}</paper-button>
                     </template>
                     <template is="dom-if" if="[[confirmButton]]" >
-                        <paper-button on-click="_action" id="[[confirmButton]]" id="confirm">{{confirmButton}}</paper-button>
+                        <paper-button on-click="_action" id="confirm">{{confirmButton}}</paper-button>
                     </template>
                 </div>
             </div>
@@ -129,6 +129,7 @@
                 this.dispatchEvent(new CustomEvent('prompt-dialog-action', {detail:{
                     action:e.currentTarget.id
                 }, bubbles: true, composed: true }));
+                this.$.dialog.close() ;
             }
             open  () {
                 this.$.dialog.open();
