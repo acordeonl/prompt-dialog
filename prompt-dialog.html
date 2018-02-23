@@ -43,6 +43,7 @@
                 @apply --layout-center-justified;
                 @apply --layout-horizontal;
                 @apply --layout-center;
+                line-height: 1.3;
             }
         </style>
         <style dialog-buttons>
@@ -100,7 +101,7 @@
                 </div>
                 <div dialog-buttons>
                     <template is="dom-if" if="[[cancelButton]]" >
-                        <paper-button on-click="close" id="cancel">{{cancelButton}}</paper-button>
+                        <paper-button on-click="_action" id="cancel">{{cancelButton}}</paper-button>
                     </template>
                     <template is="dom-if" if="[[confirmButton]]" >
                         <paper-button on-click="_action" id="confirm">{{confirmButton}}</paper-button>
