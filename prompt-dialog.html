@@ -7,9 +7,14 @@
 <dom-module id="prompt-dialog">
     <template>
         <style dialog-title>
+            .withoutTopMargin{
+                margin-bottom: 0px ; 
+            }
+            .withTopMargin{
+                margin-bottom: 20px ;
+            }
             [dialog-title] {
                 font-size: 22px;
-                margin-bottom: 20px ;
                 @apply --layout-horizontal;
                 @apply --layout-center;
                 color: var(--content-color2,#636363) ;
@@ -78,7 +83,7 @@
         <paper-dialog no-cancel-on-outside-click=[[noCancelOnOutsideClick]] entry-animation="scale-up-animation" exit-animation="fade-out-animation" id="dialog" with-backdrop>
             <div wrapper>
                 <template is="dom-if" if="[[dialogTitle]]" >
-                    <div dialog-title>
+                    <div dialog-title class$='[[_getTopMargin(withoutTopMargin)]]'>
                         <div exit-button>
                             <paper-icon-button on-click="close" icon="close"></paper-icon-button>
                         </div>
@@ -117,6 +122,7 @@
         class PromptDialog extends Polymer.Element {
             static get is() { return 'prompt-dialog'; }
             static get properties() {return {
+                withoutTopMargin:{type:Boolean,value:false},
                 noCancelOnOutsideClick:{type:Boolean,value:false},
                 dialogTitle:{type:String},
                 confirmButton:{type:String},
@@ -126,6 +132,11 @@
             }}
             constructor() {
                 super();
+            }
+            _getTopMargin(withoutTopMargin) {
+                if(withoutTopMargin)
+                    return 'withoutTopMargin' ; 
+                return 'withTopMargin' ; 
             }
             _action (e){
                 this.dispatchEvent(new CustomEvent('prompt-dialog-action', {detail:{
