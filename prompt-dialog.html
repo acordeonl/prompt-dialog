@@ -75,7 +75,7 @@
                 background-color: var(--content-background,#fafafa) ;
             }
         </style>
-        <paper-dialog entry-animation="scale-up-animation" exit-animation="fade-out-animation" id="dialog" with-backdrop>
+        <paper-dialog no-cancel-on-outside-click=[[noCancelOnOutsideClick]] entry-animation="scale-up-animation" exit-animation="fade-out-animation" id="dialog" with-backdrop>
             <div wrapper>
                 <template is="dom-if" if="[[dialogTitle]]" >
                     <div dialog-title>
@@ -117,6 +117,7 @@
         class PromptDialog extends Polymer.Element {
             static get is() { return 'prompt-dialog'; }
             static get properties() {return {
+                noCancelOnOutsideClick:{type:Boolean,value:false},
                 dialogTitle:{type:String},
                 confirmButton:{type:String},
                 cancelButton:{type:String},
