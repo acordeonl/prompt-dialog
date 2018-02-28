@@ -150,6 +150,18 @@
             close (){
                 this.$.dialog.close() ;
             }
+            async _updateDialogClickBehavior(e) {
+                if(!e.detail.opened) 
+                    await sleep(100);
+                this.noCancelOnOutsideClick = e.detail.opened ;
+            }
+            ready() {
+                super.ready() ;
+                
+                Polymer.RenderStatus.afterNextRender(this, function() {
+                    this.addEventListener('combo-box-action', e => this._updateDialogClickBehavior(e));
+                });
+            }
         }
         customElements.define('prompt-dialog', PromptDialog);
     </script>
