@@ -169,6 +169,9 @@
                 
                 Polymer.RenderStatus.afterNextRender(this, function() {
                     this.addEventListener('combo-box-action', e => this._updateDialogClickBehavior(e));
+                    if(this.cancelButton === undefined && this.confirmButton !== undefined){
+                        this.shadowRoot.querySelector('#confirm').style.width ='90%' ; 
+                    }
                 });
             }
         }
